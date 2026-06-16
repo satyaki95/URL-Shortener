@@ -41,7 +41,7 @@ exports.loginUser = async (req, res) => {
 
     // Save Token in Cookies
     res.cookie("token", token, { httpOnly: true });
-    req.redirect("/");
+    res.redirect("/");
   } catch (error) {
     res.render("login", { message: "Login Failed. Please Try Again" });
   }
