@@ -31,3 +31,12 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+
+// Compare password
+userSchema.method.comparePassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
+const User = mongoose.model("user", userSchema);
+
+module.exports = User;
