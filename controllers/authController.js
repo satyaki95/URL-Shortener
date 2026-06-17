@@ -3,22 +3,26 @@ const User = require("../models/userModel");
 
 // User registration
 exports.registerUser = async (req, res) => {
-  const { userName, email, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const user = new User({
-      userName,
+      username,
       email,
       password,
     });
     await user.save();
-    res.json({ message: "User Register Successfully" });
+    res.redirect("/auth/login");
   } catch (error) {
-    res.json({ message: "User Register Failed" });
+    console.error("Register error:", error);
+    res
+      .status(400)
+      .json({ message: "User Register Failed", error: error.message });
   }
 };
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -27,7 +31,6 @@ exports.loginUser = async (req, res) => {
       });
     }
     const isMatch = await user.comparePassword(password);
-
     if (!isMatch) {
       return res.render("login", {
         error: "Invalid Email or Password",
@@ -45,4 +48,9 @@ exports.loginUser = async (req, res) => {
   } catch (error) {
     res.render("login", { message: "Login Failed. Please Try Again" });
   }
+};
+
+exports.logoutUser = async (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/auth/login");
 };

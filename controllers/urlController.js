@@ -12,7 +12,7 @@ const shortenUrl = async (req, res) => {
       originalUrl,
       visitedHistory: [],
     });
-    res.redirect("/api");
+    res.redirect("/");
     // return res.json({ shortCode });
   } catch (error) {
     console.log("Failed to short the URL", error);
