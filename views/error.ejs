@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 2rem; }
+      .container { max-width: 800px; margin: 0 auto; }
+      h1 { color: #c00; }
+      pre { background:#f7f7f7; padding:1rem; border-radius:4px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Error</h1>
+      <p><%= typeof message !== 'undefined' ? message : 'Something went wrong' %></p>
+      <% if (typeof error !== 'undefined') { %>
+        <pre><%= JSON.stringify(error, null, 2) %></pre>
+      <% } %>
+      <p><a href="/">Go back home</a></p>
+    </div>
+  </body>
+</html>
