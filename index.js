@@ -27,9 +27,9 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/", urlRouter);
-app.use("/api", urlRouter);
 app.use("/auth", authRouter);
+app.use("/api", urlRouter);
+app.use("/", urlRouter);
 
 //Listening port
 app.listen(port, () => {
