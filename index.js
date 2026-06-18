@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const urlRouter = require("./routes/urlRouter");
 const authRouter = require("./routes/authRouter");
+require("dotenv").config();
 
 const app = express();
 const port = 3000;
@@ -10,7 +11,7 @@ app.set("view engine", "ejs");
 
 //Connect Database
 mongoose
-  .connect("mongodb://localhost:27017/urlshortener")
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Connected Successfully");
   })
