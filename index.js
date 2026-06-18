@@ -14,14 +14,26 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "public"));
 
 //Connect Database
-mongoose
-  .connect(process.env.MONGODB_URL)
-  .then(() => {
+// const mongoUrl = process.env.MONGODB_URL;
+const mongoUrl = "mongodb+srv://wwwsatyaki95_db_user:m8psGzvTZOL3zYtK@cluster0.6xuymz4.mongodb.net/?appName=Cluster0";
+
+const connectDatabase = async () => {
+  if (!mongoUrl) {
+    console.error(
+      "MONGODB_URL is not defined. Set this environment variable before starting the app."
+    );
+    return;
+  }
+
+  try {
+    await mongoose.connect(mongoUrl);
     console.log("Connected Successfully");
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log("Db not connected", error);
-  });
+  }
+};
+
+connectDatabase();
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +44,10 @@ app.use("/api", urlRouter);
 app.use("/", urlRouter);
 
 //Listening port
-app.listen(port, () => {
-  console.log(`server is running at http://localhost:${port}/`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`server is running at http://localhost:${port}/`);
+  });
+}
+
+module.exports = app;
